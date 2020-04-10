@@ -13,5 +13,5 @@ sleep ${MINUTES_IN_SEC}
 echo "End time:   $(date)"
 echo
 
-cvlc "${SONG}" --play-and-exit --gain 8 --audio-filter equalizer --equalizer-bands "0 0 0 0 0 0 0" --equalizer-preamp 15
+cvlc "${SONG}" --play-and-exit --no-volume-save --gain 8 --audio-filter equalizer --equalizer-bands "0 0 0 0 0 0 0" --equalizer-preamp 15
 
