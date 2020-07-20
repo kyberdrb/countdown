@@ -6,4 +6,9 @@ Sources:
 - https://forum.videolan.org/viewtopic.php?f=14&t=48348
 - https://superuser.com/questions/100891/vlc-command-line-interface-on-windows/100895#100895
 - cvlc -H (piped into 'less')
+- https://wiki.videolan.org/Documentation:Command_line/
+- http://tldp.org/LDP/abs/html/untyped.html
+- https://stackoverflow.com/questions/6348902/how-can-i-add-numbers-in-a-bash-script#comment29168911_6348941
+- https://linuxize.com/post/bash-while-loop/#break-and-continue-statements
+- https://linuxize.com/post/bash-functions/
 

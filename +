@@ -1,0 +1,79 @@
+#/bin/sh
+
+TIME_ARG=$1
+SONG_ARG=$2
+SONG=${SONG_ARG:="./Bongos_Sample_Sound_Effect_Loops_HD-mgJkQ5NUQ7Y.webm"}
+
+LENGTH_OF_TIME_ARG=${#TIME_ARG}
+TIME_ARG_SUBSTRING_LENGTH=$(( LENGTH_OF_TIME_ARG - 1 ))
+MINUTES=${TIME_ARG:0:$TIME_ARG_SUBSTRING_LENGTH}
+MINUTES_IN_SECONDS=$(( ${MINUTES} * 60 ))
+
+TIME_UNIT=${TIME_ARG:$TIME_ARG_SUBSTRING_LENGTH:1}
+
+#for time_arg in "$@"
+#do
+    #LENGTH_OF_TIME_ARG=${#TIME_ARG}
+    #TIME_ARG_SUBSTRING_LENGTH=$(( LENGTH_OF_TIME_ARG - 1 ))
+    #MINUTES=${TIME_ARG:0:$TIME_ARG_SUBSTRING_LENGTH}
+
+    #TIME_UNIT=${TIME_ARG:$TIME_ARG_SUBSTRING_LENGTH:1}
+    #if [ TIME_UNIT = "m" ]
+    #then
+        #SECONDS_IN_MINUTE=60
+        #MINUTES_IN_SECONDS=$(( ${MINUTES} * ${SECONDS_IN_MINUTE} ))
+    #fi
+
+    #if [ TIME_UNIT = "h" ]
+    #then
+        #SECONDS_IN_HOUR=3600
+        #MINUTES_IN_SECONDS=$(( ${MINUTES} * ${SECONDS_IN_MINUTE} ))
+    #fi
+#done
+
+START_TIME=$(date)
+PREDICTED_END_TIME=$(date -d "${START_TIME} + ${MINUTES_IN_SECONDS} seconds" "+%T")
+START_TIME=$(date "+%T")
+
+clear
+
+START_TIME_IN_SECONDS=$(date "+%s")
+TIME_ELAPSED_IN_SECONDS=0
+
+while [ ${TIME_ELAPSED_IN_SECONDS} -lt ${MINUTES_IN_SECONDS} ]
+do
+    MESSAGE=""
+
+    MESSAGE+="$@"
+    MESSAGE+="\n\n"
+
+    MESSAGE+="Countdown is set to ${MINUTES_IN_SECONDS} seconds"
+MESSAGE+="\n"
+    MESSAGE+="Time unit:\t"
+    MESSAGE+=${TIME_UNIT}
+    MESSAGE+="\n\n"
+
+    CURRENT_TIME=$(date "+%T")
+
+    CURRENT_TIME_IN_SECONDS=$(date "+%s")
+
+    TIME_ELAPSED_IN_SECONDS=$(( CURRENT_TIME_IN_SECONDS - START_TIME_IN_SECONDS ))
+
+    REMAINING_TIME_IN_SECONDS=$(( MINUTES_IN_SECONDS - TIME_ELAPSED_IN_SECONDS ))
+
+    MESSAGE+="Start time:\t\t"
+    MESSAGE+="${START_TIME}"
+
+    printf "${MESSAGE}\nCurrent time:\t\t${CURRENT_TIME}\nPredicted end time:\t${PREDICTED_END_TIME}\n\nTime elapsed:\t${TIME_ELAPSED_IN_SECONDS}\nRemaining time:\t${REMAINING_TIME_IN_SECONDS}\n"
+
+    sleep 1 # replace with a while loop to compute the difference via subtracting and comparing the result to be greater or equal that the desired delay, to remove thread blocking
+
+    clear
+done
+
+END_TIME=$(date "+%T")
+
+printf "${MESSAGE}\nStart time:\t${START_TIME}\nCurrent time:\t${CURRENT_TIME}\nTime elapsed:\t${TIME_ELAPSED_IN_SECONDS}\nRemaining time:\t${REMAINING_TIME_IN_SECONDS}\nEnd time:\t${END_TIME}\n\n"
+
+cvlc "${SONG}" --play-and-exit --no-volume-save --gain 8 --audio-filter equalizer --equalizer-bands "0 0 0 0 0 0 0" --equalizer-preamp 15
+
