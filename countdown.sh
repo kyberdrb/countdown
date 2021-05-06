@@ -1,6 +1,7 @@
 #/bin/sh
 
-SONG="./Bongos_Sample_Sound_Effect_Loops_HD-mgJkQ5NUQ7Y.webm"
+SCRIPT_DIR="$(dirname "$(readlink --canonicalize "$0")")"
+SONG="${SCRIPT_DIR}/Bongos_Sample_Sound_Effect_Loops_HD-mgJkQ5NUQ7Y.webm"
 
 TOTAL_COUNTDOWN_TIME_IN_SECONDS=0
 
